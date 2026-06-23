@@ -1,0 +1,152 @@
+.payhalal-direct-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 18px;
+  padding: 16px;
+  margin-top: 12px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.08);
+}
+
+.payhalal-direct-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.payhalal-direct-header strong {
+  display: block;
+  color: #0f172a;
+  font-size: 15px;
+  line-height: 1.2;
+}
+
+.payhalal-direct-header span {
+  display: block;
+  color: #64748b;
+  font-size: 12px;
+  margin-top: 3px;
+}
+
+.payhalal-direct-header em {
+  border-radius: 999px;
+  background: #0f172a;
+  color: #fff;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  padding: 6px 10px;
+  text-transform: uppercase;
+}
+
+.payhalal-direct-methods {
+  display: grid;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.payhalal-direct-method {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid #e5e7eb;
+  border-radius: 14px;
+  padding: 12px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.payhalal-direct-method.is-active {
+  border-color: #0f172a;
+  box-shadow: inset 0 0 0 1px #0f172a;
+}
+
+.payhalal-direct-method.is-disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.payhalal-direct-method strong,
+.payhalal-direct-method small {
+  display: block;
+}
+
+.payhalal-direct-method strong {
+  color: #0f172a;
+  font-size: 14px;
+}
+
+.payhalal-direct-method small {
+  color: #64748b;
+  font-size: 12px;
+}
+
+.payhalal-direct-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.payhalal-direct-grid .full {
+  grid-column: 1 / -1;
+}
+
+.payhalal-direct-field {
+  position: relative;
+  margin: 0 !important;
+}
+
+.payhalal-direct-field label {
+  color: #334155;
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.payhalal-direct-field input {
+  width: 100%;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  background: #fff;
+  color: #0f172a;
+  min-height: 44px;
+  padding: 11px 12px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.payhalal-direct-field input:focus {
+  border-color: #0f172a;
+  box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.1);
+  outline: none;
+}
+
+.payhalal-direct-field.has-card-brand input {
+  padding-right: 86px;
+}
+
+.payhalal-direct-brand {
+  position: absolute;
+  right: 12px;
+  bottom: 11px;
+  color: #475569;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+
+@media (max-width: 640px) {
+  .payhalal-direct-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .payhalal-direct-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+}
