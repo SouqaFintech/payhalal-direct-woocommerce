@@ -183,56 +183,41 @@
   font-size: 12px;
 }
 
-.payhalal-direct-card-panel-modern {
+.payhalal-direct-card-panel {
   border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 22px;
-  padding: 22px;
-  background:
-    radial-gradient(
-      circle at top left,
-      rgba(14, 165, 233, 0.13),
-      transparent 34%
-    ),
-    linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
-  box-shadow: 0 20px 55px rgba(15, 23, 42, 0.08);
-}
-
-.payhalal-direct-card-hero {
-  display: grid;
-  grid-template-columns: minmax(240px, 0.85fr) 1fr;
-  gap: 22px;
-  align-items: center;
-  margin-bottom: 22px;
+  border-radius: 20px;
+  padding: 14px;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(10px);
 }
 
 .payhalal-direct-card-preview {
   position: relative;
+  min-height: 112px;
+  margin-bottom: 14px;
+  border-radius: 20px;
+  padding: 16px;
   overflow: hidden;
-  min-height: 185px;
-  border-radius: 24px;
-  padding: 22px;
-  color: #ffffff;
   background:
     radial-gradient(
-      circle at 20% 15%,
-      rgba(255, 255, 255, 0.28),
-      transparent 26%
+      circle at 90% 10%,
+      rgba(255, 255, 255, 0.24),
+      transparent 24%
     ),
-    linear-gradient(135deg, #020617 0%, #0f172a 45%, #155e75 100%);
-  box-shadow:
-    0 22px 45px rgba(2, 6, 23, 0.26),
-    inset 0 1px 0 rgba(255, 255, 255, 0.18);
+    linear-gradient(135deg, #0f172a 0%, #1e293b 58%, #334155 100%);
+  color: #ffffff;
+  box-shadow: 0 18px 38px rgba(15, 23, 42, 0.22);
 }
 
-.payhalal-direct-card-glow {
+.payhalal-direct-card-preview::after {
+  content: "";
   position: absolute;
-  right: -55px;
-  top: -55px;
-  width: 150px;
-  height: 150px;
+  right: -35px;
+  bottom: -45px;
+  width: 130px;
+  height: 130px;
   border-radius: 999px;
-  background: rgba(34, 211, 238, 0.38);
-  filter: blur(12px);
+  border: 24px solid rgba(255, 255, 255, 0.08);
 }
 
 .payhalal-direct-card-preview-top,
@@ -240,207 +225,167 @@
   position: relative;
   z-index: 1;
   display: flex;
+  align-items: center;
   justify-content: space-between;
-  gap: 14px;
+  gap: 12px;
 }
 
 .payhalal-direct-card-chip {
-  width: 44px;
-  height: 32px;
-  border-radius: 10px;
-  background: linear-gradient(135deg, #fde68a, #f59e0b);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.38);
+  width: 38px;
+  height: 28px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #fef3c7, #f59e0b);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
 .payhalal-direct-card-brand-preview {
   font-size: 12px;
-  font-weight: 800;
-  letter-spacing: 0.16em;
-  color: rgba(255, 255, 255, 0.82);
+  font-weight: 900;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .payhalal-direct-card-number-preview {
   position: relative;
   z-index: 1;
-  margin: 42px 0 30px;
-  font-size: 22px;
+  margin: 20px 0 14px;
+  font-size: 17px;
   font-weight: 800;
   letter-spacing: 0.12em;
-  white-space: nowrap;
-}
-
-.payhalal-direct-card-preview-bottom {
-  align-items: flex-end;
-}
-
-.payhalal-direct-card-preview-bottom > span {
-  display: grid;
-  gap: 4px;
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .payhalal-direct-card-label {
-  font-size: 10px;
+  display: block;
+  margin-bottom: 3px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  letter-spacing: 0.12em;
-  color: rgba(255, 255, 255, 0.54);
 }
 
 .payhalal-direct-card-holder-preview,
 .payhalal-direct-card-exp-preview {
-  font-size: 12px;
-  font-weight: 800;
   color: rgba(255, 255, 255, 0.92);
-}
-
-.payhalal-direct-card-copy {
-  padding: 4px;
-}
-
-.payhalal-direct-secure-label {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  border-radius: 999px;
-  padding: 7px 11px;
-  margin-bottom: 10px;
-  background: rgba(16, 185, 129, 0.12);
-  color: #047857;
-  font-size: 12px;
+  font-size: 11px;
   font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.payhalal-direct-card-copy h4 {
-  margin: 0 0 8px;
-  color: #0f172a;
-  font-size: 20px;
-  font-weight: 850;
-  letter-spacing: -0.03em;
-}
-
-.payhalal-direct-card-copy p {
-  margin: 0;
-  color: #64748b;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-.payhalal-direct-grid-modern {
+.payhalal-direct-grid {
   display: grid;
-  grid-template-columns: 1fr 150px;
-  gap: 14px;
+  grid-template-columns: 1fr 1fr 0.8fr;
+  gap: 12px;
 }
 
-.payhalal-direct-grid-modern .full {
+.payhalal-direct-grid .full {
   grid-column: 1 / -1;
 }
 
-.payhalal-direct-expiry-group {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 14px;
-}
-
 .payhalal-direct-field {
-  margin: 0;
+  position: relative;
+  margin: 0 !important;
 }
 
 .payhalal-direct-field label {
-  display: block;
-  margin-bottom: 7px;
   color: #334155;
+  display: block;
   font-size: 12px;
   font-weight: 800;
+  letter-spacing: 0.01em;
+  margin-bottom: 7px;
 }
 
 .payhalal-direct-field input {
   width: 100%;
-  min-height: 48px;
-  border: 1px solid rgba(148, 163, 184, 0.45);
+  border: 1px solid #cbd5e1;
   border-radius: 14px;
-  padding: 12px 14px;
-  background: rgba(255, 255, 255, 0.92);
+  background: #ffffff;
   color: #0f172a;
+  min-height: 46px;
+  padding: 12px 13px;
   font-size: 14px;
-  box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.03);
   transition:
-    border-color 0.18s ease,
-    box-shadow 0.18s ease,
-    background 0.18s ease;
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.2s ease;
+}
+
+.payhalal-direct-field input::placeholder {
+  color: #94a3b8;
 }
 
 .payhalal-direct-field input:focus {
+  border-color: #0f172a;
+  box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.1);
   outline: none;
-  border-color: rgba(14, 165, 233, 0.78);
-  background: #ffffff;
-  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12);
 }
 
-.payhalal-direct-field.has-card-brand {
-  position: relative;
+.payhalal-direct-field.has-card-brand input {
+  padding-right: 88px;
 }
 
 .payhalal-direct-brand {
   position: absolute;
   right: 13px;
-  bottom: 12px;
-  color: #0f172a;
-  font-size: 12px;
+  bottom: 13px;
+  color: #334155;
+  font-size: 11px;
   font-weight: 900;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
 }
 
-.payhalal-direct-trust-row-modern {
+.payhalal-direct-trust-row {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 9px;
-  margin-top: 18px;
+  gap: 8px;
+  margin-top: 14px;
+  color: #64748b;
+  font-size: 12px;
 }
 
 .payhalal-direct-trust-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  border: 1px solid rgba(148, 163, 184, 0.24);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 999px;
-  padding: 8px 11px;
+  padding: 7px 10px;
   background: rgba(255, 255, 255, 0.72);
-  color: #475569;
-  font-size: 12px;
-  font-weight: 750;
+  font-weight: 700;
 }
 
-@media (max-width: 768px) {
-  .payhalal-direct-card-panel-modern {
-    padding: 16px;
-    border-radius: 18px;
-  }
-
-  .payhalal-direct-card-hero {
-    grid-template-columns: 1fr;
-  }
-
-  .payhalal-direct-card-preview {
-    min-height: 175px;
-  }
-
-  .payhalal-direct-card-number-preview {
-    font-size: 18px;
-    letter-spacing: 0.08em;
-  }
-
-  .payhalal-direct-grid-modern {
-    grid-template-columns: 1fr;
-  }
-
-  .payhalal-direct-expiry-group {
-    grid-template-columns: 1fr 1fr;
-  }
+.payhalal-direct-trust-pill::before {
+  content: "✓";
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 15px;
+  height: 15px;
+  border-radius: 999px;
+  background: #dcfce7;
+  color: #166534;
+  font-size: 10px;
+  font-weight: 900;
 }
 
 @media (max-width: 640px) {
   .payhalal-direct-box {
     border-radius: 20px;
     padding: 14px;
+  }
+
+  .payhalal-direct-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .payhalal-direct-field.full {
+    grid-column: 1 / -1;
   }
 
   .payhalal-direct-header {
@@ -454,9 +399,5 @@
 
   .payhalal-direct-card-number-preview {
     font-size: 14px;
-  }
-
-  .payhalal-direct-expiry-group {
-    grid-template-columns: 1fr 1fr;
   }
 }
