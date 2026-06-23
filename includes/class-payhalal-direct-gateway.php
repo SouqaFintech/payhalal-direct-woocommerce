@@ -105,61 +105,93 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
 
     public function payment_fields(): void
     {
-        if ($this->description) {
-            echo wpautop(wp_kses_post($this->description));
-        }
-
         $show_future = $this->get_option('show_future_methods', 'yes') === 'yes';
         ?>
         <div class="payhalal-direct-box">
+            <?php if ($this->description) : ?>
+                <div class="payhalal-direct-description"><?php echo wp_kses_post(wpautop($this->description)); ?></div>
+            <?php endif; ?>
+
             <div class="payhalal-direct-header">
-                <div>
-                    <strong><?php esc_html_e('PayHalal Direct', 'payhalal-direct'); ?></strong>
-                    <span><?php esc_html_e('Secure direct payment processing', 'payhalal-direct'); ?></span>
+                <div class="payhalal-direct-title">
+                    <span class="payhalal-direct-mark" aria-hidden="true">⌁</span>
+                    <div>
+                        <strong><?php esc_html_e('PayHalal Direct', 'payhalal-direct'); ?></strong>
+                        <span><?php esc_html_e('Secure card payment powered by PayHalal', 'payhalal-direct'); ?></span>
+                    </div>
                 </div>
-                <em><?php esc_html_e('Card', 'payhalal-direct'); ?></em>
+                <em class="payhalal-direct-badge"><?php esc_html_e('Secure', 'payhalal-direct'); ?></em>
             </div>
 
-            <div class="payhalal-direct-methods">
+            <div class="payhalal-direct-methods" role="radiogroup" aria-label="<?php esc_attr_e('PayHalal Direct payment method', 'payhalal-direct'); ?>">
                 <label class="payhalal-direct-method is-active">
                     <input type="radio" name="payhalal_direct_method" value="card" checked>
-                    <span><strong><?php esc_html_e('Card', 'payhalal-direct'); ?></strong><small><?php esc_html_e('Debit or credit card', 'payhalal-direct'); ?></small></span>
+                    <span class="payhalal-direct-method-icon" aria-hidden="true">💳</span>
+                    <span><strong><?php esc_html_e('Card', 'payhalal-direct'); ?></strong><small><?php esc_html_e('Visa, Mastercard and supported debit cards', 'payhalal-direct'); ?></small></span>
                 </label>
 
                 <?php if ($show_future) : ?>
                     <label class="payhalal-direct-method is-disabled">
                         <input type="radio" name="payhalal_direct_method" value="fpx" disabled>
-                        <span><strong><?php esc_html_e('FPX', 'payhalal-direct'); ?></strong><small><?php esc_html_e('Coming soon', 'payhalal-direct'); ?></small></span>
+                        <span class="payhalal-direct-method-icon" aria-hidden="true">🏦</span>
+                        <span><strong><?php esc_html_e('FPX Online Banking', 'payhalal-direct'); ?></strong><small><?php esc_html_e('Coming soon', 'payhalal-direct'); ?></small></span>
                     </label>
                     <label class="payhalal-direct-method is-disabled">
                         <input type="radio" name="payhalal_direct_method" value="tng" disabled>
+                        <span class="payhalal-direct-method-icon" aria-hidden="true">📱</span>
                         <span><strong><?php esc_html_e('TNG eWallet', 'payhalal-direct'); ?></strong><small><?php esc_html_e('Coming soon', 'payhalal-direct'); ?></small></span>
                     </label>
                 <?php endif; ?>
             </div>
 
-            <div class="payhalal-direct-grid">
-                <p class="payhalal-direct-field full">
-                    <label for="payhalal_direct_card_holder_name"><?php esc_html_e('Cardholder Name', 'payhalal-direct'); ?></label>
-                    <input id="payhalal_direct_card_holder_name" name="payhalal_direct_card_holder_name" type="text" autocomplete="cc-name" placeholder="Name on card">
-                </p>
-                <p class="payhalal-direct-field full has-card-brand">
-                    <label for="payhalal_direct_card_number"><?php esc_html_e('Card Number', 'payhalal-direct'); ?></label>
-                    <input id="payhalal_direct_card_number" name="payhalal_direct_card_number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" maxlength="23">
-                    <span class="payhalal-direct-brand" aria-live="polite"></span>
-                </p>
-                <p class="payhalal-direct-field">
-                    <label for="payhalal_direct_card_exp_mn"><?php esc_html_e('Expiry Month', 'payhalal-direct'); ?></label>
-                    <input id="payhalal_direct_card_exp_mn" name="payhalal_direct_card_exp_mn" type="text" inputmode="numeric" autocomplete="cc-exp-month" placeholder="MM" maxlength="2">
-                </p>
-                <p class="payhalal-direct-field">
-                    <label for="payhalal_direct_card_exp_yy"><?php esc_html_e('Expiry Year', 'payhalal-direct'); ?></label>
-                    <input id="payhalal_direct_card_exp_yy" name="payhalal_direct_card_exp_yy" type="text" inputmode="numeric" autocomplete="cc-exp-year" placeholder="YY" maxlength="4">
-                </p>
-                <p class="payhalal-direct-field">
-                    <label for="payhalal_direct_card_cvv"><?php esc_html_e('CVV', 'payhalal-direct'); ?></label>
-                    <input id="payhalal_direct_card_cvv" name="payhalal_direct_card_cvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4">
-                </p>
+            <div class="payhalal-direct-card-panel">
+                <div class="payhalal-direct-card-preview" aria-hidden="true">
+                    <div class="payhalal-direct-card-preview-top">
+                        <span class="payhalal-direct-card-chip"></span>
+                        <span class="payhalal-direct-card-brand-preview">Card</span>
+                    </div>
+                    <div class="payhalal-direct-card-number-preview">•••• •••• •••• ••••</div>
+                    <div class="payhalal-direct-card-preview-bottom">
+                        <span>
+                            <span class="payhalal-direct-card-label"><?php esc_html_e('Cardholder', 'payhalal-direct'); ?></span>
+                            <span class="payhalal-direct-card-holder-preview"><?php esc_html_e('Name on card', 'payhalal-direct'); ?></span>
+                        </span>
+                        <span>
+                            <span class="payhalal-direct-card-label"><?php esc_html_e('Expires', 'payhalal-direct'); ?></span>
+                            <span class="payhalal-direct-card-exp-preview">MM/YY</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="payhalal-direct-grid">
+                    <p class="payhalal-direct-field full">
+                        <label for="payhalal_direct_card_holder_name"><?php esc_html_e('Cardholder Name', 'payhalal-direct'); ?></label>
+                        <input id="payhalal_direct_card_holder_name" name="payhalal_direct_card_holder_name" type="text" autocomplete="cc-name" placeholder="Name on card">
+                    </p>
+                    <p class="payhalal-direct-field full has-card-brand">
+                        <label for="payhalal_direct_card_number"><?php esc_html_e('Card Number', 'payhalal-direct'); ?></label>
+                        <input id="payhalal_direct_card_number" name="payhalal_direct_card_number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" maxlength="23">
+                        <span class="payhalal-direct-brand" aria-live="polite"></span>
+                    </p>
+                    <p class="payhalal-direct-field">
+                        <label for="payhalal_direct_card_exp_mn"><?php esc_html_e('Month', 'payhalal-direct'); ?></label>
+                        <input id="payhalal_direct_card_exp_mn" name="payhalal_direct_card_exp_mn" type="text" inputmode="numeric" autocomplete="cc-exp-month" placeholder="MM" maxlength="2">
+                    </p>
+                    <p class="payhalal-direct-field">
+                        <label for="payhalal_direct_card_exp_yy"><?php esc_html_e('Year', 'payhalal-direct'); ?></label>
+                        <input id="payhalal_direct_card_exp_yy" name="payhalal_direct_card_exp_yy" type="text" inputmode="numeric" autocomplete="cc-exp-year" placeholder="YY" maxlength="4">
+                    </p>
+                    <p class="payhalal-direct-field">
+                        <label for="payhalal_direct_card_cvv"><?php esc_html_e('CVV', 'payhalal-direct'); ?></label>
+                        <input id="payhalal_direct_card_cvv" name="payhalal_direct_card_cvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4">
+                    </p>
+                </div>
+
+                <div class="payhalal-direct-trust-row">
+                    <span class="payhalal-direct-trust-pill"><?php esc_html_e('Encrypted payment', 'payhalal-direct'); ?></span>
+                    <span class="payhalal-direct-trust-pill"><?php esc_html_e('No card data stored', 'payhalal-direct'); ?></span>
+                    <span class="payhalal-direct-trust-pill"><?php esc_html_e('Order status sync', 'payhalal-direct'); ?></span>
+                </div>
             </div>
         </div>
         <?php
@@ -167,7 +199,8 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
 
     public function validate_fields(): bool
     {
-        $method = isset($_POST['payhalal_direct_method']) ? sanitize_text_field(wp_unslash($_POST['payhalal_direct_method'])) : 'card';
+        $posted = $this->get_posted_payment_data();
+        $method = isset($posted['payhalal_direct_method']) ? sanitize_text_field($posted['payhalal_direct_method']) : 'card';
 
         if ($method !== 'card') {
             wc_add_notice(__('Selected PayHalal Direct method is not available yet.', 'payhalal-direct'), 'error');
@@ -188,16 +221,16 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
         ];
 
         foreach ($required as $field => $message) {
-            if (empty($_POST[$field])) {
+            if (empty($posted[$field])) {
                 wc_add_notice($message, 'error');
                 return false;
             }
         }
 
-        $card_number = preg_replace('/\D+/', '', sanitize_text_field(wp_unslash($_POST['payhalal_direct_card_number'])));
-        $month = preg_replace('/\D+/', '', sanitize_text_field(wp_unslash($_POST['payhalal_direct_card_exp_mn'])));
-        $year = preg_replace('/\D+/', '', sanitize_text_field(wp_unslash($_POST['payhalal_direct_card_exp_yy'])));
-        $cvv = preg_replace('/\D+/', '', sanitize_text_field(wp_unslash($_POST['payhalal_direct_card_cvv'])));
+        $card_number = preg_replace('/\D+/', '', sanitize_text_field($posted['payhalal_direct_card_number'] ?? ''));
+        $month = preg_replace('/\D+/', '', sanitize_text_field($posted['payhalal_direct_card_exp_mn'] ?? ''));
+        $year = preg_replace('/\D+/', '', sanitize_text_field($posted['payhalal_direct_card_exp_yy'] ?? ''));
+        $cvv = preg_replace('/\D+/', '', sanitize_text_field($posted['payhalal_direct_card_cvv'] ?? ''));
 
         if (strlen($card_number) < 12 || strlen($card_number) > 19) {
             wc_add_notice(__('Please enter a valid card number.', 'payhalal-direct'), 'error');
@@ -272,11 +305,13 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
 
     private function build_card_payload(WC_Order $order): array
     {
-        $holder = sanitize_text_field(wp_unslash($_POST['payhalal_direct_card_holder_name'] ?? ''));
-        $number = preg_replace('/\D+/', '', sanitize_text_field(wp_unslash($_POST['payhalal_direct_card_number'] ?? '')));
-        $month = preg_replace('/\D+/', '', sanitize_text_field(wp_unslash($_POST['payhalal_direct_card_exp_mn'] ?? '')));
-        $year = preg_replace('/\D+/', '', sanitize_text_field(wp_unslash($_POST['payhalal_direct_card_exp_yy'] ?? '')));
-        $cvv = preg_replace('/\D+/', '', sanitize_text_field(wp_unslash($_POST['payhalal_direct_card_cvv'] ?? '')));
+        $posted = $this->get_posted_payment_data();
+
+        $holder = sanitize_text_field($posted['payhalal_direct_card_holder_name'] ?? '');
+        $number = preg_replace('/\D+/', '', sanitize_text_field($posted['payhalal_direct_card_number'] ?? ''));
+        $month = preg_replace('/\D+/', '', sanitize_text_field($posted['payhalal_direct_card_exp_mn'] ?? ''));
+        $year = preg_replace('/\D+/', '', sanitize_text_field($posted['payhalal_direct_card_exp_yy'] ?? ''));
+        $cvv = preg_replace('/\D+/', '', sanitize_text_field($posted['payhalal_direct_card_cvv'] ?? ''));
 
         if (strlen($year) === 4) {
             $year = substr($year, -2);
@@ -300,6 +335,53 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
             'return_url' => $order->get_checkout_payment_url(false),
             'callback_url' => home_url('/?wc-api=payhalal_direct_callback'),
         ];
+    }
+
+    private function get_posted_payment_data(): array
+    {
+        $posted = [];
+
+        foreach ($_POST as $key => $value) {
+            if (strpos((string) $key, 'payhalal_direct_') !== 0) {
+                continue;
+            }
+
+            $posted[$key] = is_scalar($value)
+                ? sanitize_text_field(wp_unslash((string) $value))
+                : '';
+        }
+
+        if (isset($_POST['payment_data'])) {
+            $payment_data = wp_unslash($_POST['payment_data']);
+
+            if (is_string($payment_data)) {
+                $decoded = json_decode($payment_data, true);
+                if (is_array($decoded)) {
+                    $payment_data = $decoded;
+                }
+            }
+
+            if (is_array($payment_data)) {
+                foreach ($payment_data as $key => $item) {
+                    if (is_string($key) && strpos($key, 'payhalal_direct_') === 0) {
+                        $posted[$key] = is_scalar($item) ? sanitize_text_field((string) $item) : '';
+                        continue;
+                    }
+
+                    if (is_array($item) && isset($item['key'], $item['value'])) {
+                        $posted[(string) $item['key']] = is_scalar($item['value']) ? sanitize_text_field((string) $item['value']) : '';
+                    } elseif (is_array($item)) {
+                        foreach ($item as $nested_key => $value) {
+                            if (strpos((string) $nested_key, 'payhalal_direct_') === 0) {
+                                $posted[(string) $nested_key] = is_scalar($value) ? sanitize_text_field((string) $value) : '';
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        return $posted;
     }
 
     private function get_product_description(WC_Order $order): string

@@ -1,49 +1,73 @@
 === PayHalal Direct for WooCommerce ===
 Contributors: souqafintech
-Tags: woocommerce, payment gateway, card payment, payhalal, acquiring
-Requires at least: 6.0
-Tested up to: 6.6
+Tags: woocommerce, payment gateway, card payments, checkout blocks, hpos
+Requires at least: 6.5
+Tested up to: 6.8
 Requires PHP: 7.4
 Stable tag: 1.0.0
-License: GPLv2 or later
+License: Proprietary
 
-Accept direct card payments through PayHalal Direct in WooCommerce.
+Accept secure card payments through PayHalal Direct directly from your WooCommerce store.
 
 == Description ==
 
-PayHalal Direct for WooCommerce allows WooCommerce stores to accept direct card payments through PayHalal Direct acquiring APIs.
+PayHalal Direct for WooCommerce enables merchants to accept online card payments securely through the PayHalal Direct payment platform.
 
-Version 1.0.0 supports Card payments first. FPX and TNG checkout options are prepared as Coming Soon UI options and can be enabled in future releases.
+The plugin supports Classic WooCommerce Checkout, the latest WooCommerce Checkout Block, and WooCommerce High-Performance Order Storage.
 
-== Features ==
+= Key Features =
 
-* WooCommerce payment gateway integration
-* Modern checkout card payment UI
-* PayHalal Direct authentication token caching
-* Direct card payment request to /acquiring/cards
-* Transaction ID saved to WooCommerce order meta
-* Callback endpoint support: /?wc-api=payhalal_direct_callback
-* Backward-friendly callback alias: /?wc-api=payhalal_callback
-* WooCommerce order status update from callback payload
-* Safe debug logging with sensitive fields redacted
-* WooCommerce HPOS compatibility declaration
+* Secure card payment processing
+* WooCommerce Classic Checkout support
+* WooCommerce Checkout Block support
+* Automatic payment status updates
+* Secure callback handling
+* Transaction reconciliation support
+* WooCommerce HPOS compatibility
+* Sandbox and Production configuration
+
+== Requirements ==
+
+* WordPress 6.5 or later
+* WooCommerce 8.5 or later
+* PHP 8.1 or later recommended
+* Active PayHalal Direct merchant account
+* Valid App ID and App Secret issued by Souqa Fintech
 
 == Installation ==
 
-1. Upload the plugin ZIP from WordPress Admin > Plugins > Add New > Upload Plugin.
+1. Upload the plugin ZIP file from Plugins > Add New > Upload Plugin.
 2. Activate the plugin.
 3. Go to WooCommerce > Settings > Payments.
 4. Enable PayHalal Direct.
-5. Add API Base URL, App ID, App Secret, and Merchant ID.
-6. Copy the Callback URL into the PayHalal merchant configuration if needed.
+5. Enter your App ID, App Secret, Merchant ID, and API Base URL.
+6. Save changes.
 
-== Security Notes ==
+== Supported Payment Methods ==
 
-This direct card integration collects card details on WooCommerce checkout and forwards them to PayHalal Direct. The plugin does not store card numbers or CVV in order meta or logs. Merchants should confirm PCI requirements before production usage.
+= Current Release =
+
+* Credit Cards
+* Debit Cards
+
+= Upcoming Releases =
+
+* FPX Online Banking
+* Touch 'n Go eWallet
+* DuitNow QR
+
+== Security ==
+
+PayHalal Direct does not store full card numbers, CVV values, or card expiry details in WooCommerce order records.
 
 == Changelog ==
 
 = 1.0.0 =
-* Initial release.
-* Added Card payment support.
-* Added PayHalal Direct auth, card payment, callback, transaction meta and safe logging.
+
+* Initial release
+* Card payment support
+* Classic Checkout support
+* Checkout Block support
+* Callback handling
+* Transaction reconciliation support
+* WooCommerce HPOS compatibility
