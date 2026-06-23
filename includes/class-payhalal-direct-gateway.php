@@ -83,7 +83,14 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
                 'type' => 'checkbox',
                 'label' => __('Enable safe debug logging', 'payhalal-direct'),
                 'default' => 'no',
-                'description' => __('Sensitive card data and secrets are redacted from logs.', 'payhalal-direct'),
+                'description' => __('Logs API requests, responses and WooCommerce gateway events to WooCommerce → Status → Logs. Sensitive card data and secrets are redacted.', 'payhalal-direct'),
+            ],
+            'debug_checkout_errors' => [
+                'title' => __('Debug Checkout Errors', 'payhalal-direct'),
+                'type' => 'checkbox',
+                'label' => __('Show detailed PayHalal error messages on checkout while debugging', 'payhalal-direct'),
+                'default' => 'no',
+                'description' => __('Only enable on staging or during internal testing. Keep disabled for live customers.', 'payhalal-direct'),
             ],
             'callback_url' => [
                 'title' => __('Callback URL', 'payhalal-direct'),
@@ -264,16 +271,28 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
             return ['result' => 'failure'];
         }
 
+        $debug_enabled = $this->get_option('debug', 'no') === 'yes';
+        $logger = new PayHalal_Direct_Logger($debug_enabled);
+
         try {
+            $logger->debug('Starting PayHalal Direct payment for WooCommerce order #' . $order->get_id(), [
+                'order_id' => $order->get_id(),
+                'amount' => $order->get_total(),
+                'currency' => $order->get_currency(),
+            ]);
+
             $api = new PayHalal_Direct_API(
                 $this->get_option('base_url', 'https://agents.souqafintech.com'),
                 $this->get_option('app_id'),
                 $this->get_option('app_secret'),
-                $this->get_option('debug', 'no') === 'yes'
+                $debug_enabled
             );
 
             $payload = $this->build_card_payload($order);
+            $logger->debug('Built PayHalal Direct card payload for order #' . $order->get_id(), $payload);
+
             $response = $api->create_card_payment($payload);
+            $logger->debug('PayHalal Direct card payment response received for order #' . $order->get_id(), $response);
 
             $transaction_id = isset($response['transaction_id']) ? sanitize_text_field($response['transaction_id']) : '';
             $link = isset($response['link']) ? (string) $response['link'] : '';
@@ -281,6 +300,11 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
             if (!$link) {
                 throw new Exception(__('Payment link missing from PayHalal Direct response.', 'payhalal-direct'));
             }
+
+            $logger->debug('PayHalal Direct redirect URL prepared for order #' . $order->get_id(), [
+                'transaction_id' => $transaction_id,
+                'redirect' => $this->build_redirect_url($link),
+            ]);
 
             if ($transaction_id) {
                 $order->update_meta_data('_payhalal_direct_transaction_id', $transaction_id);
@@ -297,8 +321,18 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
                 'redirect' => $this->build_redirect_url($link),
             ];
         } catch (Exception $e) {
+            $logger->debug('PayHalal Direct payment failed for WooCommerce order #' . $order->get_id(), [
+                'error' => $e->getMessage(),
+            ]);
+
             $order->add_order_note('PayHalal Direct payment error: ' . $e->getMessage());
-            wc_add_notice(__('Payment could not be started. Please try again or use another payment method.', 'payhalal-direct'), 'error');
+
+            if ($this->get_option('debug_checkout_errors', 'no') === 'yes' && current_user_can('manage_woocommerce')) {
+                wc_add_notice(sprintf(__('PayHalal Debug: %s', 'payhalal-direct'), esc_html($e->getMessage())), 'error');
+            } else {
+                wc_add_notice(__('Payment could not be started. Please try again or use another payment method.', 'payhalal-direct'), 'error');
+            }
+
             return ['result' => 'failure'];
         }
     }

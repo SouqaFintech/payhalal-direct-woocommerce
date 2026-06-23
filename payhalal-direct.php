@@ -3,7 +3,7 @@
  * Plugin Name: PayHalal Direct for WooCommerce
  * Plugin URI: https://payhalal.my/
  * Description: Accept direct card payments through PayHalal Direct in WooCommerce, including Classic Checkout and Checkout Blocks support.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Souqa Fintech Sdn Bhd
  * Author URI: https://payhalal.my/
  * Text Domain: payhalal-direct
@@ -17,7 +17,7 @@
 
 defined('ABSPATH') || exit;
 
-define('PAYHALAL_DIRECT_VERSION', '1.0.0');
+define('PAYHALAL_DIRECT_VERSION', '1.0.1');
 define('PAYHALAL_DIRECT_FILE', __FILE__);
 define('PAYHALAL_DIRECT_PATH', plugin_dir_path(__FILE__));
 define('PAYHALAL_DIRECT_URL', plugin_dir_url(__FILE__));
