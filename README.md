@@ -97,6 +97,17 @@ PayHalal Direct does not store full card numbers, CVV values, or card expiry det
 
 Sensitive payment information is transmitted securely to the PayHalal Direct payment platform.
 
+
+## Debugging
+
+If a payment cannot be started, enable **Debug Log** from **WooCommerce → Settings → Payments → PayHalal Direct**.
+
+Logs are available at **WooCommerce → Status → Logs** using the `payhalal-direct` source.
+
+For internal testing, you may also enable **Debug Checkout Errors** to show the exact PayHalal error message on checkout for WooCommerce administrators. Keep this option disabled for live customers.
+
+The plugin redacts sensitive values such as card numbers, CVV, app secrets and tokens from logs.
+
 ## Troubleshooting
 
 ### Payment Method Does Not Appear on Checkout

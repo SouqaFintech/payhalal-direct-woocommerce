@@ -4,7 +4,7 @@ Tags: woocommerce, payment gateway, card payments, checkout blocks, hpos
 Requires at least: 6.5
 Tested up to: 6.8
 Requires PHP: 7.4
-Stable tag: 1.0.0
+Stable tag: 1.0.1
 License: Proprietary
 
 Accept secure card payments through PayHalal Direct directly from your WooCommerce store.
@@ -61,6 +61,10 @@ The plugin supports Classic WooCommerce Checkout, the latest WooCommerce Checkou
 PayHalal Direct does not store full card numbers, CVV values, or card expiry details in WooCommerce order records.
 
 == Changelog ==
+
+= 1.0.1 =
+* Added enhanced safe debug logging.
+* Added admin-only detailed checkout error option for testing.
 
 = 1.0.0 =
 
