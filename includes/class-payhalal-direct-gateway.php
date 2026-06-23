@@ -27,6 +27,7 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
     public function init_form_fields(): void
     {
         $callback_url = home_url('/?wc-api=payhalal_direct_callback');
+        $return_url = home_url('/?wc-api=payhalal_direct_return');
 
         $this->form_fields = [
             'enabled' => [
@@ -92,6 +93,11 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
                 'default' => 'no',
                 'description' => __('Only enable on staging or during internal testing. Keep disabled for live customers.', 'payhalal-direct'),
             ],
+            'return_url' => [
+                'title' => __('Return URL', 'payhalal-direct'),
+                'type' => 'title',
+                'description' => '<code>' . esc_html($return_url) . '</code><p class="description">PayHalal Direct uses this URL to return customers back to WooCommerce after payment.</p>',
+            ],
             'callback_url' => [
                 'title' => __('Callback URL', 'payhalal-direct'),
                 'type' => 'title',
@@ -151,53 +157,71 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
                 <?php endif; ?>
             </div>
 
-            <div class="payhalal-direct-card-panel">
-                <div class="payhalal-direct-card-preview" aria-hidden="true">
-                    <div class="payhalal-direct-card-preview-top">
-                        <span class="payhalal-direct-card-chip"></span>
-                        <span class="payhalal-direct-card-brand-preview">Card</span>
+            <div class="payhalal-direct-card-panel payhalal-direct-card-panel-modern">
+                <div class="payhalal-direct-card-hero">
+                    <div class="payhalal-direct-card-preview" aria-hidden="true">
+                        <div class="payhalal-direct-card-glow"></div>
+
+                        <div class="payhalal-direct-card-preview-top">
+                            <span class="payhalal-direct-card-chip"></span>
+                            <span class="payhalal-direct-card-brand-preview">CARD</span>
+                        </div>
+
+                        <div class="payhalal-direct-card-number-preview">•••• •••• •••• ••••</div>
+
+                        <div class="payhalal-direct-card-preview-bottom">
+                            <span>
+                                <span class="payhalal-direct-card-label"><?php esc_html_e('Cardholder', 'payhalal-direct'); ?></span>
+                                <span class="payhalal-direct-card-holder-preview"><?php esc_html_e('Name on card', 'payhalal-direct'); ?></span>
+                            </span>
+                            <span>
+                                <span class="payhalal-direct-card-label"><?php esc_html_e('Expires', 'payhalal-direct'); ?></span>
+                                <span class="payhalal-direct-card-exp-preview">MM/YY</span>
+                            </span>
+                        </div>
                     </div>
-                    <div class="payhalal-direct-card-number-preview">•••• •••• •••• ••••</div>
-                    <div class="payhalal-direct-card-preview-bottom">
-                        <span>
-                            <span class="payhalal-direct-card-label"><?php esc_html_e('Cardholder', 'payhalal-direct'); ?></span>
-                            <span class="payhalal-direct-card-holder-preview"><?php esc_html_e('Name on card', 'payhalal-direct'); ?></span>
-                        </span>
-                        <span>
-                            <span class="payhalal-direct-card-label"><?php esc_html_e('Expires', 'payhalal-direct'); ?></span>
-                            <span class="payhalal-direct-card-exp-preview">MM/YY</span>
-                        </span>
+
+                    <div class="payhalal-direct-card-copy">
+                        <span class="payhalal-direct-secure-label"><?php esc_html_e('Secure Checkout', 'payhalal-direct'); ?></span>
+                        <h4><?php esc_html_e('Enter your card details', 'payhalal-direct'); ?></h4>
+                        <p><?php esc_html_e('Your payment is processed securely through PayHalal Direct. Card details are never stored on this store.', 'payhalal-direct'); ?></p>
                     </div>
                 </div>
 
-                <div class="payhalal-direct-grid">
+                <div class="payhalal-direct-grid payhalal-direct-grid-modern">
                     <p class="payhalal-direct-field full">
                         <label for="payhalal_direct_card_holder_name"><?php esc_html_e('Cardholder Name', 'payhalal-direct'); ?></label>
                         <input id="payhalal_direct_card_holder_name" name="payhalal_direct_card_holder_name" type="text" autocomplete="cc-name" placeholder="Name on card">
                     </p>
+
                     <p class="payhalal-direct-field full has-card-brand">
                         <label for="payhalal_direct_card_number"><?php esc_html_e('Card Number', 'payhalal-direct'); ?></label>
                         <input id="payhalal_direct_card_number" name="payhalal_direct_card_number" type="text" inputmode="numeric" autocomplete="cc-number" placeholder="1234 1234 1234 1234" maxlength="23">
                         <span class="payhalal-direct-brand" aria-live="polite"></span>
                     </p>
-                    <p class="payhalal-direct-field">
-                        <label for="payhalal_direct_card_exp_mn"><?php esc_html_e('Month', 'payhalal-direct'); ?></label>
-                        <input id="payhalal_direct_card_exp_mn" name="payhalal_direct_card_exp_mn" type="text" inputmode="numeric" autocomplete="cc-exp-month" placeholder="MM" maxlength="2">
-                    </p>
-                    <p class="payhalal-direct-field">
-                        <label for="payhalal_direct_card_exp_yy"><?php esc_html_e('Year', 'payhalal-direct'); ?></label>
-                        <input id="payhalal_direct_card_exp_yy" name="payhalal_direct_card_exp_yy" type="text" inputmode="numeric" autocomplete="cc-exp-year" placeholder="YY" maxlength="4">
-                    </p>
+
+                    <div class="payhalal-direct-expiry-group">
+                        <p class="payhalal-direct-field">
+                            <label for="payhalal_direct_card_exp_mn"><?php esc_html_e('Month', 'payhalal-direct'); ?></label>
+                            <input id="payhalal_direct_card_exp_mn" name="payhalal_direct_card_exp_mn" type="text" inputmode="numeric" autocomplete="cc-exp-month" placeholder="MM" maxlength="2">
+                        </p>
+
+                        <p class="payhalal-direct-field">
+                            <label for="payhalal_direct_card_exp_yy"><?php esc_html_e('Year', 'payhalal-direct'); ?></label>
+                            <input id="payhalal_direct_card_exp_yy" name="payhalal_direct_card_exp_yy" type="text" inputmode="numeric" autocomplete="cc-exp-year" placeholder="YY" maxlength="4">
+                        </p>
+                    </div>
+
                     <p class="payhalal-direct-field">
                         <label for="payhalal_direct_card_cvv"><?php esc_html_e('CVV', 'payhalal-direct'); ?></label>
                         <input id="payhalal_direct_card_cvv" name="payhalal_direct_card_cvv" type="password" inputmode="numeric" autocomplete="cc-csc" placeholder="123" maxlength="4">
                     </p>
                 </div>
 
-                <div class="payhalal-direct-trust-row">
-                    <span class="payhalal-direct-trust-pill"><?php esc_html_e('Encrypted payment', 'payhalal-direct'); ?></span>
-                    <span class="payhalal-direct-trust-pill"><?php esc_html_e('No card data stored', 'payhalal-direct'); ?></span>
-                    <span class="payhalal-direct-trust-pill"><?php esc_html_e('Order status sync', 'payhalal-direct'); ?></span>
+                <div class="payhalal-direct-trust-row payhalal-direct-trust-row-modern">
+                    <span class="payhalal-direct-trust-pill">🔒 <?php esc_html_e('Encrypted payment', 'payhalal-direct'); ?></span>
+                    <span class="payhalal-direct-trust-pill">🛡️ <?php esc_html_e('No card data stored', 'payhalal-direct'); ?></span>
+                    <span class="payhalal-direct-trust-pill">✅ <?php esc_html_e('Order status sync', 'payhalal-direct'); ?></span>
                 </div>
             </div>
         </div>
@@ -301,9 +325,11 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
                 throw new Exception(__('Payment link missing from PayHalal Direct response.', 'payhalal-direct'));
             }
 
+            $redirect_url = $this->build_redirect_url($link);
+
             $logger->debug('PayHalal Direct redirect URL prepared for order #' . $order->get_id(), [
                 'transaction_id' => $transaction_id,
-                'redirect' => $this->build_redirect_url($link),
+                'redirect' => $redirect_url,
             ]);
 
             if ($transaction_id) {
@@ -318,7 +344,7 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
 
             return [
                 'result' => 'success',
-                'redirect' => $this->build_redirect_url($link),
+                'redirect' => $redirect_url,
             ];
         } catch (Exception $e) {
             $logger->debug('PayHalal Direct payment failed for WooCommerce order #' . $order->get_id(), [
@@ -351,6 +377,13 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
             $year = substr($year, -2);
         }
 
+        $payhalal_return_url = add_query_arg(
+            [
+                'order_id' => $order->get_id(),
+            ],
+            home_url('/?wc-api=payhalal_direct_return')
+        );
+
         return [
             'amount' => (float) $order->get_total(),
             'currency' => $order->get_currency(),
@@ -365,8 +398,8 @@ class WC_Gateway_PayHalal_Direct extends WC_Payment_Gateway
             'card_exp_mn' => str_pad($month, 2, '0', STR_PAD_LEFT),
             'card_exp_yy' => $year,
             'card_cvv' => $cvv,
-            'success_url' => $order->get_checkout_order_received_url(),
-            'return_url' => $order->get_checkout_payment_url(false),
+            'success_url' => $payhalal_return_url,
+            'return_url' => $payhalal_return_url,
             'callback_url' => home_url('/?wc-api=payhalal_direct_callback'),
         ];
     }

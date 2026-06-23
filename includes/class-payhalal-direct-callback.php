@@ -8,6 +8,9 @@ class PayHalal_Direct_Callback
     {
         add_action('woocommerce_api_payhalal_direct_callback', [__CLASS__, 'handle']);
         add_action('woocommerce_api_payhalal_callback', [__CLASS__, 'handle']); // Backward-friendly alias.
+
+        add_action('woocommerce_api_payhalal_direct_return', [__CLASS__, 'handle_return']);
+        add_action('woocommerce_api_payhalal_return', [__CLASS__, 'handle_return']); // Backward-friendly alias.
     }
 
     public static function handle(): void
@@ -23,17 +26,7 @@ class PayHalal_Direct_Callback
         $transaction_id = isset($payload['transaction_id']) ? sanitize_text_field(wp_unslash($payload['transaction_id'])) : '';
         $status = isset($payload['status']) ? strtoupper(sanitize_text_field(wp_unslash($payload['status']))) : '';
 
-        $order = $order_id ? wc_get_order($order_id) : false;
-
-        if (!$order && $transaction_id) {
-            $orders = wc_get_orders([
-                'limit' => 1,
-                'meta_key' => '_payhalal_direct_transaction_id',
-                'meta_value' => $transaction_id,
-                'return' => 'objects',
-            ]);
-            $order = !empty($orders) ? $orders[0] : false;
-        }
+        $order = self::find_order($order_id, $transaction_id);
 
         if (!$order) {
             status_header(404);
@@ -52,6 +45,74 @@ class PayHalal_Direct_Callback
         wp_send_json(['status' => 'ok']);
     }
 
+    public static function handle_return(): void
+    {
+        $payload = array_merge($_GET, $_POST);
+
+        $order_id = isset($payload['order_id']) ? sanitize_text_field(wp_unslash($payload['order_id'])) : '';
+        $transaction_id = isset($payload['transaction_id']) ? sanitize_text_field(wp_unslash($payload['transaction_id'])) : '';
+        $status = isset($payload['status']) ? strtoupper(sanitize_text_field(wp_unslash($payload['status']))) : '';
+
+        $order = self::find_order($order_id, $transaction_id);
+
+        if (!$order) {
+            wc_add_notice(__('We could not verify your PayHalal Direct payment return. Please check your order or contact support.', 'payhalal-direct'), 'error');
+            wp_safe_redirect(wc_get_checkout_url());
+            exit;
+        }
+
+        if ($transaction_id) {
+            $order->update_meta_data('_payhalal_direct_transaction_id', $transaction_id);
+        }
+
+        $order->update_meta_data('_payhalal_direct_last_return', wp_json_encode($payload));
+
+        if ($status) {
+            self::apply_status($order, $status);
+            $order->save();
+        }
+
+        if ($order->is_paid() || $order->has_status(['processing', 'completed', 'on-hold'])) {
+            wp_safe_redirect($order->get_checkout_order_received_url());
+            exit;
+        }
+
+        if ($order->has_status(['failed', 'cancelled'])) {
+            wc_add_notice(__('Your payment was not completed. Please try again or use another payment method.', 'payhalal-direct'), 'error');
+            wp_safe_redirect($order->get_checkout_payment_url(false));
+            exit;
+        }
+
+        wp_safe_redirect($order->get_checkout_order_received_url());
+        exit;
+    }
+
+    protected static function find_order(string $order_id = '', string $transaction_id = '')
+    {
+        if ($order_id) {
+            $order = wc_get_order(absint($order_id));
+
+            if ($order) {
+                return $order;
+            }
+        }
+
+        if ($transaction_id) {
+            $orders = wc_get_orders([
+                'limit' => 1,
+                'meta_key' => '_payhalal_direct_transaction_id',
+                'meta_value' => $transaction_id,
+                'return' => 'objects',
+            ]);
+
+            if (!empty($orders)) {
+                return $orders[0];
+            }
+        }
+
+        return false;
+    }
+
     public static function apply_status(WC_Order $order, string $status): void
     {
         $paid_statuses = ['PAID', 'SUCCESS', 'SUCCESSFUL', 'COMPLETED', 'APPROVED', 'CAPTURED'];
@@ -61,13 +122,13 @@ class PayHalal_Direct_Callback
         if (in_array($status, $paid_statuses, true)) {
             if (!$order->is_paid()) {
                 $order->payment_complete($order->get_meta('_payhalal_direct_transaction_id'));
-                $order->add_order_note('PayHalal Direct payment completed via callback.');
+                $order->add_order_note('PayHalal Direct payment completed via callback/return.');
             }
             return;
         }
 
         if (in_array($status, $failed_statuses, true)) {
-            $order->update_status('failed', 'PayHalal Direct payment failed via callback. Status: ' . $status);
+            $order->update_status('failed', 'PayHalal Direct payment failed via callback/return. Status: ' . $status);
             return;
         }
 
@@ -75,11 +136,15 @@ class PayHalal_Direct_Callback
             if ($order->has_status(['pending'])) {
                 $order->update_status('on-hold', 'PayHalal Direct payment is pending. Status: ' . $status);
             } else {
-                $order->add_order_note('PayHalal Direct callback status: ' . $status);
+                $order->add_order_note('PayHalal Direct callback/return status: ' . $status);
             }
             return;
         }
 
-        $order->add_order_note('PayHalal Direct callback received. Status: ' . ($status ?: 'UNKNOWN'));
+        if ($status) {
+            $order->add_order_note('PayHalal Direct callback/return received. Status: ' . $status);
+        } else {
+            $order->add_order_note('PayHalal Direct callback/return received. Status: UNKNOWN');
+        }
     }
 }
