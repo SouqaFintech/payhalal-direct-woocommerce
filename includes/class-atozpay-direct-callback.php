@@ -2,15 +2,15 @@
 
 defined('ABSPATH') || exit;
 
-class PayHalal_Direct_Callback
+class Atozpay_Direct_Callback
 {
     public static function init(): void
     {
-        add_action('woocommerce_api_payhalal_direct_callback', [__CLASS__, 'handle']);
-        add_action('woocommerce_api_payhalal_callback', [__CLASS__, 'handle']); // Backward-friendly alias.
+        add_action('woocommerce_api_atozpay_direct_callback', [__CLASS__, 'handle']);
+        add_action('woocommerce_api_atozpay_callback', [__CLASS__, 'handle']); // Backward-friendly alias.
 
-        add_action('woocommerce_api_payhalal_direct_return', [__CLASS__, 'handle_return']);
-        add_action('woocommerce_api_payhalal_return', [__CLASS__, 'handle_return']); // Backward-friendly alias.
+        add_action('woocommerce_api_atozpay_direct_return', [__CLASS__, 'handle_return']);
+        add_action('woocommerce_api_atozpay_return', [__CLASS__, 'handle_return']); // Backward-friendly alias.
     }
 
     public static function handle(): void
@@ -34,10 +34,10 @@ class PayHalal_Direct_Callback
         }
 
         if ($transaction_id) {
-            $order->update_meta_data('_payhalal_direct_transaction_id', $transaction_id);
+            $order->update_meta_data('_atozpay_direct_transaction_id', $transaction_id);
         }
 
-        $order->update_meta_data('_payhalal_direct_last_callback', wp_json_encode($payload));
+        $order->update_meta_data('_atozpay_direct_last_callback', wp_json_encode($payload));
 
         self::apply_status($order, $status);
         $order->save();
@@ -56,16 +56,16 @@ class PayHalal_Direct_Callback
         $order = self::find_order($order_id, $transaction_id);
 
         if (!$order) {
-            wc_add_notice(__('We could not verify your PayHalal Direct payment return. Please check your order or contact support.', 'payhalal-direct'), 'error');
+            wc_add_notice(__('We could not verify your Atozpay Direct payment return. Please check your order or contact support.', 'atozpay-direct'), 'error');
             wp_safe_redirect(wc_get_checkout_url());
             exit;
         }
 
         if ($transaction_id) {
-            $order->update_meta_data('_payhalal_direct_transaction_id', $transaction_id);
+            $order->update_meta_data('_atozpay_direct_transaction_id', $transaction_id);
         }
 
-        $order->update_meta_data('_payhalal_direct_last_return', wp_json_encode($payload));
+        $order->update_meta_data('_atozpay_direct_last_return', wp_json_encode($payload));
 
         if ($status) {
             self::apply_status($order, $status);
@@ -78,7 +78,7 @@ class PayHalal_Direct_Callback
         }
 
         if ($order->has_status(['failed', 'cancelled'])) {
-            wc_add_notice(__('Your payment was not completed. Please try again or use another payment method.', 'payhalal-direct'), 'error');
+            wc_add_notice(__('Your payment was not completed. Please try again or use another payment method.', 'atozpay-direct'), 'error');
             wp_safe_redirect($order->get_checkout_payment_url(false));
             exit;
         }
@@ -100,7 +100,7 @@ class PayHalal_Direct_Callback
         if ($transaction_id) {
             $orders = wc_get_orders([
                 'limit' => 1,
-                'meta_key' => '_payhalal_direct_transaction_id',
+                'meta_key' => '_atozpay_direct_transaction_id',
                 'meta_value' => $transaction_id,
                 'return' => 'objects',
             ]);
@@ -121,30 +121,30 @@ class PayHalal_Direct_Callback
 
         if (in_array($status, $paid_statuses, true)) {
             if (!$order->is_paid()) {
-                $order->payment_complete($order->get_meta('_payhalal_direct_transaction_id'));
-                $order->add_order_note('PayHalal Direct payment completed via callback/return.');
+                $order->payment_complete($order->get_meta('_atozpay_direct_transaction_id'));
+                $order->add_order_note('Atozpay Direct payment completed via callback/return.');
             }
             return;
         }
 
         if (in_array($status, $failed_statuses, true)) {
-            $order->update_status('failed', 'PayHalal Direct payment failed via callback/return. Status: ' . $status);
+            $order->update_status('failed', 'Atozpay Direct payment failed via callback/return. Status: ' . $status);
             return;
         }
 
         if (in_array($status, $pending_statuses, true)) {
             if ($order->has_status(['pending'])) {
-                $order->update_status('on-hold', 'PayHalal Direct payment is pending. Status: ' . $status);
+                $order->update_status('on-hold', 'Atozpay Direct payment is pending. Status: ' . $status);
             } else {
-                $order->add_order_note('PayHalal Direct callback/return status: ' . $status);
+                $order->add_order_note('Atozpay Direct callback/return status: ' . $status);
             }
             return;
         }
 
         if ($status) {
-            $order->add_order_note('PayHalal Direct callback/return received. Status: ' . $status);
+            $order->add_order_note('Atozpay Direct callback/return received. Status: ' . $status);
         } else {
-            $order->add_order_note('PayHalal Direct callback/return received. Status: UNKNOWN');
+            $order->add_order_note('Atozpay Direct callback/return received. Status: UNKNOWN');
         }
     }
 }

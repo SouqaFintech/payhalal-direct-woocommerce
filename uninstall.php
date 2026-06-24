@@ -1,6 +1,6 @@
 <?php
 /**
- * PayHalal Direct uninstall file.
+ * Atozpay Direct uninstall file.
  */
 
 defined('WP_UNINSTALL_PLUGIN') || exit;
