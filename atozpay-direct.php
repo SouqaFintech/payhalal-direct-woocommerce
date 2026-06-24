@@ -3,7 +3,7 @@
  * Plugin Name: Atozpay Direct for WooCommerce
  * Plugin URI: https://atozpay.net/
  * Description: Accept card, FPX and TNG eWallet payments through AtozPay in WooCommerce, including Classic Checkout and Checkout Blocks support.
- * Version: 1.1.0
+ * Version: 1.1.1
  * Author: Atozpay Sdn Bhd
  * Author URI: https://atozpay.net/
  * Text Domain: atozpay-direct
@@ -17,7 +17,7 @@
 
 defined('ABSPATH') || exit;
 
-define('ATOZPAY_DIRECT_VERSION', '1.1.0');
+define('ATOZPAY_DIRECT_VERSION', '1.1.1');
 define('ATOZPAY_DIRECT_FILE', __FILE__);
 define('ATOZPAY_DIRECT_PATH', plugin_dir_path(__FILE__));
 define('ATOZPAY_DIRECT_URL', plugin_dir_url(__FILE__));

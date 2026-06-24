@@ -59,7 +59,7 @@ Atozpay Direct does not store full card numbers, CVV values, or card expiry deta
 
 == Changelog ==
 
-= 1.1.0 =
+= 1.1.1 =
 * Added FPX Online Banking support.
 * Added Touch 'n Go eWallet support.
 * Added checkout payment method selection for Card, FPX and TNG.
