@@ -7,5 +7,5 @@ return [
         'wp-html-entities',
         'wp-i18n',
     ],
-    'version' => PAYHALAL_DIRECT_VERSION,
+    'version' => ATOZPAY_DIRECT_VERSION,
 ];

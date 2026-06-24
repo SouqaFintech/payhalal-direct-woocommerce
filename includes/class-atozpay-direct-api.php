@@ -2,26 +2,41 @@
 
 defined('ABSPATH') || exit;
 
-class PayHalal_Direct_API
+class Atozpay_Direct_API
 {
     private string $base_url;
     private string $app_id;
     private string $app_secret;
-    private PayHalal_Direct_Logger $logger;
+    private Atozpay_Direct_Logger $logger;
 
     public function __construct(string $base_url, string $app_id, string $app_secret, bool $debug = false)
     {
-        $this->base_url = untrailingslashit($base_url ?: 'https://agents.souqafintech.com');
+        $this->base_url = untrailingslashit($base_url ?: 'https://agents.atozpay.net');
         $this->app_id = $app_id;
         $this->app_secret = $app_secret;
-        $this->logger = new PayHalal_Direct_Logger($debug);
+        $this->logger = new Atozpay_Direct_Logger($debug);
     }
 
     public function create_card_payment(array $payload): array
     {
+        return $this->create_acquiring_payment('cards', $payload);
+    }
+
+    public function create_fpx_payment(array $payload): array
+    {
+        return $this->create_acquiring_payment('fpx', $payload);
+    }
+
+    public function create_tng_payment(array $payload): array
+    {
+        return $this->create_acquiring_payment('tng', $payload);
+    }
+
+    private function create_acquiring_payment(string $method, array $payload): array
+    {
         $token = $this->get_token();
 
-        return $this->request('POST', '/acquiring/cards', $payload, [
+        return $this->request('POST', '/acquiring/' . $method, $payload, [
             'Authorization' => 'Bearer ' . $token,
         ]);
     }
@@ -46,7 +61,7 @@ class PayHalal_Direct_API
 
     private function get_token(): string
     {
-        $cache_key = 'payhalal_direct_token_' . md5($this->app_id . '|' . $this->base_url);
+        $cache_key = 'atozpay_direct_token_' . md5($this->app_id . '|' . $this->base_url);
         $cached = get_transient($cache_key);
 
         if (is_string($cached) && $cached !== '') {
@@ -59,7 +74,7 @@ class PayHalal_Direct_API
         ], [], false);
 
         if (empty($response['token'])) {
-            throw new Exception('PayHalal Direct authentication failed. Token missing from response.');
+            throw new Exception('AtozPay authentication failed. Token missing from response.');
         }
 
         set_transient($cache_key, sanitize_text_field($response['token']), 30 * MINUTE_IN_SECONDS);
@@ -101,11 +116,11 @@ class PayHalal_Direct_API
         $this->logger->debug('Response HTTP ' . $code, is_array($decoded) ? $decoded : $raw_body);
 
         if (!is_array($decoded)) {
-            throw new Exception('Invalid PayHalal Direct API response.');
+            throw new Exception('Invalid AtozPay API response.');
         }
 
         if ($code < 200 || $code >= 300) {
-            $message = $decoded['status_text'] ?? $decoded['message'] ?? 'PayHalal Direct API request failed.';
+            $message = $decoded['status_text'] ?? $decoded['message'] ?? 'AtozPay API request failed.';
             throw new Exception((string) $message);
         }
 

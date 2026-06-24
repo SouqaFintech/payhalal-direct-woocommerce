@@ -2,7 +2,7 @@
 
 defined('ABSPATH') || exit;
 
-class PayHalal_Direct_Logger
+class AtozPay_Direct_Logger
 {
     private bool $enabled;
     private ?WC_Logger $logger = null;
@@ -26,7 +26,7 @@ class PayHalal_Direct_Logger
             $line .= ' ' . wp_json_encode($this->redact($context));
         }
 
-        $this->logger->debug($line, ['source' => 'payhalal-direct']);
+        $this->logger->debug($line, ['source' => 'atozpay-direct']);
     }
 
     public function redact($data)
