@@ -153,7 +153,6 @@
         { className: "atozpay-direct-alt-panel atozpay-direct-payment-panel", "data-atozpay-panel": "tng" },
         el("div", { className: "atozpay-direct-alt-header" }, el("span", { className: "atozpay-direct-alt-icon", "aria-hidden": true }, "📱"), el("div", {}, el("strong", {}, __("Pay with TNG eWallet", "atozpay-direct")), el("span", {}, __("After placing your order, you will be redirected to complete your eWallet payment.", "atozpay-direct"))))
       ) : null,
-      el("div", { className: "atozpay-direct-trust-row" }, el("span", { className: "atozpay-direct-trust-pill" }, __("Encrypted payment", "atozpay-direct")), el("span", { className: "atozpay-direct-trust-pill" }, __("No card data stored", "atozpay-direct")), el("span", { className: "atozpay-direct-trust-pill" }, __("Order status sync", "atozpay-direct"))),
     );
   };
 

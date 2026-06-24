@@ -247,12 +247,6 @@ class WC_Gateway_Atozpay_Direct extends WC_Payment_Gateway
                     </div>
                 </div>
             <?php endif; ?>
-
-            <div class="atozpay-direct-trust-row">
-                <span class="atozpay-direct-trust-pill"><?php esc_html_e('Encrypted payment', 'atozpay-direct'); ?></span>
-                <span class="atozpay-direct-trust-pill"><?php esc_html_e('No card data stored', 'atozpay-direct'); ?></span>
-                <span class="atozpay-direct-trust-pill"><?php esc_html_e('Order status sync', 'atozpay-direct'); ?></span>
-            </div>
         </div>
         <?php
     }
