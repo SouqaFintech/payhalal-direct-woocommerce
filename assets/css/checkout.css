@@ -1,4 +1,4 @@
-.payhalal-direct-box {
+.atozpay-direct-box {
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(15, 23, 42, 0.1);
@@ -20,7 +20,7 @@
   box-shadow: 0 18px 48px rgba(15, 23, 42, 0.1);
 }
 
-.payhalal-direct-box::before {
+.atozpay-direct-box::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -32,19 +32,19 @@
   );
 }
 
-.payhalal-direct-box > * {
+.atozpay-direct-box > * {
   position: relative;
   z-index: 1;
 }
 
-.payhalal-direct-description {
+.atozpay-direct-description {
   margin: 0 0 14px !important;
   color: #475569;
   font-size: 13px;
   line-height: 1.55;
 }
 
-.payhalal-direct-header {
+.atozpay-direct-header {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -52,13 +52,13 @@
   margin-bottom: 16px;
 }
 
-.payhalal-direct-title {
+.atozpay-direct-title {
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
-.payhalal-direct-mark {
+.atozpay-direct-mark {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -72,21 +72,21 @@
   box-shadow: 0 10px 22px rgba(15, 23, 42, 0.22);
 }
 
-.payhalal-direct-header strong {
+.atozpay-direct-header strong {
   display: block;
   color: #0f172a;
   font-size: 15px;
   line-height: 1.2;
 }
 
-.payhalal-direct-header span {
+.atozpay-direct-header span {
   display: block;
   color: #64748b;
   font-size: 12px;
   margin-top: 3px;
 }
 
-.payhalal-direct-badge {
+.atozpay-direct-badge {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -102,19 +102,19 @@
   white-space: nowrap;
 }
 
-.payhalal-direct-badge::before {
+.atozpay-direct-badge::before {
   content: "●";
   color: #22c55e;
   font-size: 9px;
 }
 
-.payhalal-direct-methods {
+.atozpay-direct-methods {
   display: grid;
   gap: 10px;
   margin-bottom: 14px;
 }
 
-.payhalal-direct-method {
+.atozpay-direct-method {
   display: flex;
   align-items: center;
   gap: 11px;
@@ -129,28 +129,28 @@
     transform 0.2s ease;
 }
 
-.payhalal-direct-method:hover {
+.atozpay-direct-method:hover {
   transform: translateY(-1px);
   border-color: rgba(15, 23, 42, 0.22);
 }
 
-.payhalal-direct-method.is-active {
+.atozpay-direct-method.is-active {
   border-color: #0f172a;
   box-shadow:
     inset 0 0 0 1px #0f172a,
     0 12px 24px rgba(15, 23, 42, 0.08);
 }
 
-.payhalal-direct-method.is-disabled {
+.atozpay-direct-method.is-disabled {
   opacity: 0.55;
   cursor: not-allowed;
 }
 
-.payhalal-direct-method.is-disabled:hover {
+.atozpay-direct-method.is-disabled:hover {
   transform: none;
 }
 
-.payhalal-direct-method-icon {
+.atozpay-direct-method-icon {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -164,26 +164,26 @@
   font-size: 14px;
 }
 
-.payhalal-direct-method input {
+.atozpay-direct-method input {
   accent-color: #0f172a;
 }
 
-.payhalal-direct-method strong,
-.payhalal-direct-method small {
+.atozpay-direct-method strong,
+.atozpay-direct-method small {
   display: block;
 }
 
-.payhalal-direct-method strong {
+.atozpay-direct-method strong {
   color: #0f172a;
   font-size: 14px;
 }
 
-.payhalal-direct-method small {
+.atozpay-direct-method small {
   color: #64748b;
   font-size: 12px;
 }
 
-.payhalal-direct-card-panel {
+.atozpay-direct-card-panel {
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 20px;
   padding: 14px;
@@ -191,7 +191,7 @@
   backdrop-filter: blur(10px);
 }
 
-.payhalal-direct-card-preview {
+.atozpay-direct-card-preview {
   position: relative;
   min-height: 112px;
   margin-bottom: 14px;
@@ -209,7 +209,7 @@
   box-shadow: 0 18px 38px rgba(15, 23, 42, 0.22);
 }
 
-.payhalal-direct-card-preview::after {
+.atozpay-direct-card-preview::after {
   content: "";
   position: absolute;
   right: -35px;
@@ -220,8 +220,8 @@
   border: 24px solid rgba(255, 255, 255, 0.08);
 }
 
-.payhalal-direct-card-preview-top,
-.payhalal-direct-card-preview-bottom {
+.atozpay-direct-card-preview-top,
+.atozpay-direct-card-preview-bottom {
   position: relative;
   z-index: 1;
   display: flex;
@@ -230,7 +230,7 @@
   gap: 12px;
 }
 
-.payhalal-direct-card-chip {
+.atozpay-direct-card-chip {
   width: 38px;
   height: 28px;
   border-radius: 8px;
@@ -238,7 +238,7 @@
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.35);
 }
 
-.payhalal-direct-card-brand-preview {
+.atozpay-direct-card-brand-preview {
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 0.08em;
@@ -246,7 +246,7 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.payhalal-direct-card-number-preview {
+.atozpay-direct-card-number-preview {
   position: relative;
   z-index: 1;
   margin: 20px 0 14px;
@@ -256,7 +256,7 @@
   color: rgba(255, 255, 255, 0.95);
 }
 
-.payhalal-direct-card-label {
+.atozpay-direct-card-label {
   display: block;
   margin-bottom: 3px;
   color: rgba(255, 255, 255, 0.58);
@@ -266,8 +266,8 @@
   text-transform: uppercase;
 }
 
-.payhalal-direct-card-holder-preview,
-.payhalal-direct-card-exp-preview {
+.atozpay-direct-card-holder-preview,
+.atozpay-direct-card-exp-preview {
   color: rgba(255, 255, 255, 0.92);
   font-size: 11px;
   font-weight: 800;
@@ -275,22 +275,22 @@
   text-transform: uppercase;
 }
 
-.payhalal-direct-grid {
+.atozpay-direct-grid {
   display: grid;
   grid-template-columns: 1fr 1fr 0.8fr;
   gap: 12px;
 }
 
-.payhalal-direct-grid .full {
+.atozpay-direct-grid .full {
   grid-column: 1 / -1;
 }
 
-.payhalal-direct-field {
+.atozpay-direct-field {
   position: relative;
   margin: 0 !important;
 }
 
-.payhalal-direct-field label {
+.atozpay-direct-field label {
   color: #334155;
   display: block;
   font-size: 12px;
@@ -299,7 +299,7 @@
   margin-bottom: 7px;
 }
 
-.payhalal-direct-field input {
+.atozpay-direct-field input {
   width: 100%;
   border: 1px solid #cbd5e1;
   border-radius: 14px;
@@ -314,21 +314,21 @@
     background 0.2s ease;
 }
 
-.payhalal-direct-field input::placeholder {
+.atozpay-direct-field input::placeholder {
   color: #94a3b8;
 }
 
-.payhalal-direct-field input:focus {
+.atozpay-direct-field input:focus {
   border-color: #0f172a;
   box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.1);
   outline: none;
 }
 
-.payhalal-direct-field.has-card-brand input {
+.atozpay-direct-field.has-card-brand input {
   padding-right: 88px;
 }
 
-.payhalal-direct-brand {
+.atozpay-direct-brand {
   position: absolute;
   right: 13px;
   bottom: 13px;
@@ -339,7 +339,7 @@
   text-transform: uppercase;
 }
 
-.payhalal-direct-trust-row {
+.atozpay-direct-trust-row {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -349,7 +349,7 @@
   font-size: 12px;
 }
 
-.payhalal-direct-trust-pill {
+.atozpay-direct-trust-pill {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -360,7 +360,7 @@
   font-weight: 700;
 }
 
-.payhalal-direct-trust-pill::before {
+.atozpay-direct-trust-pill::before {
   content: "✓";
   display: inline-flex;
   align-items: center;
@@ -375,29 +375,90 @@
 }
 
 @media (max-width: 640px) {
-  .payhalal-direct-box {
+  .atozpay-direct-box {
     border-radius: 20px;
     padding: 14px;
   }
 
-  .payhalal-direct-grid {
+  .atozpay-direct-grid {
     grid-template-columns: 1fr 1fr;
   }
 
-  .payhalal-direct-field.full {
+  .atozpay-direct-field.full {
     grid-column: 1 / -1;
   }
 
-  .payhalal-direct-header {
+  .atozpay-direct-header {
     align-items: flex-start;
     flex-direction: column;
   }
 
-  .payhalal-direct-badge {
+  .atozpay-direct-badge {
     align-self: flex-start;
   }
 
-  .payhalal-direct-card-number-preview {
+  .atozpay-direct-card-number-preview {
     font-size: 14px;
   }
+}
+
+.atozpay-direct-alt-panel {
+  margin-top: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 20px;
+  padding: 20px;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fafc 100%);
+  box-shadow: 0 18px 45px rgba(15, 23, 42, 0.06);
+}
+
+.atozpay-direct-alt-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+.atozpay-direct-alt-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  background: rgba(14, 165, 233, 0.1);
+  font-size: 22px;
+}
+
+.atozpay-direct-alt-header strong {
+  display: block;
+  color: #0f172a;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.atozpay-direct-alt-header span:not(.atozpay-direct-alt-icon) {
+  display: block;
+  margin-top: 3px;
+  color: #64748b;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.atozpay-direct-field select {
+  width: 100%;
+  min-height: 48px;
+  border: 1px solid rgba(148, 163, 184, 0.45);
+  border-radius: 14px;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.95);
+  color: #0f172a;
+  font-size: 14px;
+  box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.03);
+}
+
+.atozpay-direct-field select:focus {
+  outline: none;
+  border-color: rgba(14, 165, 233, 0.78);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(14, 165, 233, 0.12);
 }

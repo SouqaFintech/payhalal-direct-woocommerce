@@ -1,20 +1,20 @@
-# PayHalal Direct Developer Documentation
+# Atozpay Direct Developer Documentation
 
-This document provides technical implementation details for PayHalal Direct for WooCommerce.
+This document provides technical implementation details for Atozpay Direct for WooCommerce.
 
 ## Plugin Architecture
 
 The plugin is structured for both classic and modern WooCommerce checkout compatibility.
 
 ```txt
-payhalal-direct/
-├── payhalal-direct.php
+atozpay-direct/
+├── atozpay-direct.php
 ├── includes/
-│   ├── class-payhalal-direct-api.php
-│   ├── class-payhalal-direct-blocks.php
-│   ├── class-payhalal-direct-callback.php
-│   ├── class-payhalal-direct-gateway.php
-│   └── class-payhalal-direct-logger.php
+│   ├── class-atozpay-direct-api.php
+│   ├── class-atozpay-direct-blocks.php
+│   ├── class-atozpay-direct-callback.php
+│   ├── class-atozpay-direct-gateway.php
+│   └── class-atozpay-direct-logger.php
 ├── assets/
 │   ├── css/checkout.css
 │   └── js/
@@ -35,7 +35,7 @@ Supported checkout implementations:
 The payment gateway ID is:
 
 ```txt
-payhalal_direct
+atozpay_direct
 ```
 
 ## Authentication
@@ -96,7 +96,7 @@ X-Version: v1
 
 ```json
 {
-  "amount": 100.00,
+  "amount": 100.0,
   "currency": "MYR",
   "product_description": "Order #1001",
   "order_id": "1001",
@@ -111,7 +111,7 @@ X-Version: v1
   "card_cvv": "123",
   "success_url": "https://merchant.com/checkout/order-received/1001/",
   "return_url": "https://merchant.com/checkout/order-pay/1001/",
-  "callback_url": "https://merchant.com/?wc-api=payhalal_direct_callback"
+  "callback_url": "https://merchant.com/?wc-api=atozpay_direct_callback"
 }
 ```
 
@@ -131,7 +131,7 @@ X-Version: v1
 Redirect customers to:
 
 ```txt
-https://agents.souqafintech.com/{payment_link}
+https://agents.atozpay.net/{payment_link}
 ```
 
 ## Callback URL
@@ -139,7 +139,7 @@ https://agents.souqafintech.com/{payment_link}
 WooCommerce callback endpoint:
 
 ```txt
-https://merchant-site.com/?wc-api=payhalal_direct_callback
+https://merchant-site.com/?wc-api=atozpay_direct_callback
 ```
 
 The callback handler should:
@@ -168,10 +168,10 @@ GET /acquiring/order/{order_id}
 Allowed metadata:
 
 ```php
-_payhalal_direct_transaction_id
-_payhalal_direct_payment_method
-_payhalal_direct_last_status
-_payhalal_direct_last_recon
+_atozpay_direct_transaction_id
+_atozpay_direct_payment_method
+_atozpay_direct_last_status
+_atozpay_direct_last_recon
 ```
 
 Never store:
@@ -186,7 +186,7 @@ JWT token
 
 ## Checkout Blocks Notes
 
-The Checkout Block integration registers PayHalal Direct using:
+The Checkout Block integration registers Atozpay Direct using:
 
 ```php
 Automattic\WooCommerce\Blocks\Payments\Integrations\AbstractPaymentMethodType
